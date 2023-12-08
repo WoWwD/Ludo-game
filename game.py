@@ -4,7 +4,6 @@ from boardnavigation import Direction
 
 def launch():
     print(Const.notification)
-    print()
     while True:
         return int(input("Enter board size: "))
 
@@ -22,6 +21,7 @@ class Game:
         for i in range(len(self.players)):
             if self.players[i].countFinishedFigures == self.countFigures:
                 print(f'{self.players[i].name} won')
+                print(f'{self.players[i].name} has {self.players[i].countFinishedFigures} finished figures')
                 return True
 
     # Checking for players in the center and returning them to base
