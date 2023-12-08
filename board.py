@@ -28,6 +28,7 @@ class Board:
                     else:
                         print(' ', end=' ')
             print()
+        print('------------------------------')
 
     def isRoad(self, i, j):
         mainRoad = (j in [self.middleBoard - 1, self.middleBoard + 1] or

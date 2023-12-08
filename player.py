@@ -3,7 +3,7 @@ from boardnavigation import Direction
 
 
 class Player:
-    def __init__(self, name, figure, direction, movement):
+    def __init__(self, name, figure, direction, navigation):
         self.name = name
         self.figure = figure
         self.x = 0
@@ -11,11 +11,11 @@ class Player:
         self.direction = direction
         self.countFinishedFigures = 0
         self.currentRoll = 0
-        self.movement = movement
+        self.navigation = navigation
 
     # Function for movement, first the direction is determined and then a step is taken
     def move(self):
-        self.direction = self.movement.isTurn([self.x, self.y], self.direction)
+        self.direction = self.navigation.isTurn([self.x, self.y], self.direction)
         if self.direction == Direction.DOWN:
             self.x += 1
         if self.direction == Direction.UP:
@@ -38,10 +38,3 @@ class Player:
 
     def rollDice(self):
         self.currentRoll = random.randint(1, 6)
-
-    def getInfo(self):
-        print('')
-        print(f'{self.name}: {self.getCurrentPosition()}')
-        print(f'Roll: {self.currentRoll}')
-        print(f'Count finished figures: {self.countFinishedFigures}')
-        print('')

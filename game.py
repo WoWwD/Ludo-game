@@ -33,16 +33,41 @@ class Game:
             if player.name == Const.player2Name:
                 player.setPosition(self.player2Base)
 
-    def isRoadToCenter(self, player):
+    # Logic for the behavior of the figures when they reach the final road
+    def isOnTheFinalRoad(self, player):
+        # Way for the first player only
         if player.name == Const.player1Name:
-            result = player.x <= self.board.middleBoard and player.y == self.board.middleBoard
-            if result:
+            isOnTheFinalRoad = player.x <= self.board.middleBoard and player.y == self.board.middleBoard
+            if isOnTheFinalRoad:
                 if player.direction != Direction.DOWN:
                     player.direction = Direction.DOWN
-            return result
+            return isOnTheFinalRoad
+        # Way for the second player only
         if player.name == Const.player2Name:
-            result = player.x >= self.board.middleBoard and player.y == self.board.middleBoard
-            if result:
+            isOnTheFinalRoad = player.x >= self.board.middleBoard and player.y == self.board.middleBoard
+            if isOnTheFinalRoad:
                 if player.direction != Direction.UP:
                     player.direction = Direction.UP
-            return result
+            return isOnTheFinalRoad
+
+    def getPlayersInfo(self):
+        for player in self.players:
+            print('')
+            print(f'{player.name}: {player.getCurrentPosition()}')
+            print(f'Roll: {player.currentRoll}')
+            print(f'Count finished figures: {player.countFinishedFigures}')
+            print('')
+
+    # The function determines whether the first or second player will reach the center on the current dice roll
+    def reachesCenterThisTurn(self, player):
+        firstPlayer = player.x + player.currentRoll == self.board.middleBoard
+        secondPlayer = player.x - player.currentRoll == self.board.middleBoard
+        if firstPlayer or secondPlayer:
+            return True
+
+    # The function determines whether the first or second player will overshoot the center on the current dice roll
+    def canMoveToCenterWithoutOvershooting(self, player):
+        firstPlayer = player.currentRoll <= self.board.middleBoard - player.x
+        secondPlayer = player.currentRoll <= player.x - self.board.middleBoard
+        if firstPlayer or secondPlayer:
+            return True
